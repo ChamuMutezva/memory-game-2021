@@ -8,7 +8,7 @@ import './App.css';
 
 function App() {
   const [rerender, setRerender] = useState(false);
-  const [nums, setNums] = useState([]) 
+  const [nums, setNums] = useState([])
   const [error, setError] = useState(null)
   const [fetchStatus, setFetchStatus] = useState('idle')
   const fetchData = async () => {
@@ -19,7 +19,7 @@ function App() {
     try {
       const user = await app.logIn(credentials);
       const allNumbers = await user.functions.getAllNumbers()
-      setNums(allNumbers.sort(() => Math.random() - 0.5))     
+      setNums(allNumbers.sort(() => Math.random() - 0.5))
       setRerender(!rerender)
       setFetchStatus("success")
       console.log(nums)
@@ -31,15 +31,15 @@ function App() {
   }
   useEffect(() => {
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {    
-    
-   handleClick()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+
+    handleShuffle()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  
+
   if (fetchStatus === "idle" || fetchStatus === "loading") {
     return <div><h2>Loading...</h2></div>
   }
@@ -48,35 +48,41 @@ function App() {
     return <div><h1>Something went wrong!!</h1></div>
   }
 
-  function handleClick() {    
+  function handleShuffle() {
     setRerender(!rerender)
     setNums(nums.sort(() => Math.random() - 0.5))
     console.log(nums)
   }
 
-  
+  function flipCard(e) {
+    const parent = e.target.closest("button")
+    parent.classList.toggle("flip")
+   console.log(parent)
+  }
+
+
 
   return (
     <div className="App">
       <header className="App-header">
         <h1 className='heading-title'>memory game</h1>
-                
+
       </header>
-     
+
       <main className='main'>
-        <div className='container'>
+        <div className='memory-game'>
           {/*
           {nums && nums.map(num => <CardButton key={num.id} num={num.num} />)}
           */}
           {nums && nums.map(num => {
-            return <button key={num._id} className='num-btn'>
-              <span className="card-front">{num.num}</span>
-              <span className="card-back"></span>
-              </button>
+            return <button key={num._id} className='memory-card' onClick={flipCard}>
+              <span className="front-face">{num.num} </span>
+              <span className="back-face"></span>                          
+            </button>
           })}
-        
+
         </div>
-        <button onClick={handleClick}>Shuffle Cards</button>
+        <button onClick={handleShuffle}>Shuffle Cards</button>
       </main>
 
     </div>

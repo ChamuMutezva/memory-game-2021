@@ -2,7 +2,7 @@ import React from 'react'
 
 function CardButton(props) {
     return (
-        <button>
+        <button onClick={props.onClick}>
              {props.num}
         </button>
     )

@@ -146,7 +146,7 @@ function App() {
           })}
 
         </div>
-        <button onClick={handleShuffle}>Shuffle Cards</button>
+        <button className='shuffle-cards-btn' onClick={handleShuffle}>Shuffle Cards</button>
       </main>
       <ModalEnd openModal={isOpen} click={modalEndControl}/>
     </div>

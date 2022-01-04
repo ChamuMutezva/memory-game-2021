@@ -1,5 +1,6 @@
 body {
     background-color: rgb(151, 183, 243);
+    font-family: 'Passion One', cursive;
 }
 
 .App {
@@ -21,26 +22,39 @@ body {
 .main {
     display: grid;
     place-content: center;
+    gap: 2rem;
 }
 
 .memory-game {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     padding-inline: 1rem;
     max-width: 36.25rem;
     gap: .5rem;
-	perspective: 1000px;
+    perspective: 1000px;
 }
 
 .memory-card {
+    font-family: 'Passion One', cursive;
     position: relative;
     padding: 2rem;
-    font-size: 2rem;
-    font-weight: 900;
+    font-size: 2.5rem;
+    font-weight: 400;
     transform: scale(1);
-	transform-style: preserve-3d;
-	transition: transform .5s;
+    transform-style: preserve-3d;
+    transition: transform .5s;
+    outline: none;
+    border: none;   
+   
 }
+
+.memory-card:hover,
+.memory-card:focus {
+    cursor: pointer;
+    outline: dashed currentColor;
+    outline-offset: 0.055em;
+}
+
 
 .memory-card:active {
     transform: scale(.97);
@@ -56,18 +70,19 @@ body {
     top: 0;
     left: 0;
     backface-visibility: hidden;
-      display: flex;
+    display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;  
 }
 
 .back-face {
     transform: rotateX(0);
-	background-color: #332159;
+    background-color: #332159;
 }
 
 .front-face {
-   transform: rotateY(-180deg); 
+    transform: rotateY(-180deg);
+    background-color: #fbb3e2;
 }
 
 .memory-card.flip {
@@ -75,17 +90,46 @@ body {
 }
 
 .modal-dialog {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	top: 0;
-	left: 0;
-	min-height: 100vh;
-	background-color: azure;
-	width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    background-color: azure;
+    width: 100%;
 }
 
 .modal-closed {
     display: none;
+}
+
+.shuffle-cards-btn {
+	max-width: 10rem;
+	display: inline-block;
+	margin: auto;
+	padding: .6rem;
+	font-size: 1.25rem;
+    font-weight: 700;
+    border-radius: 5px;
+    border: none;
+    outline: none;    
+    box-shadow: 1px 1px 1px 1px rgb(210, 214, 213);
+}
+
+.shuffle-cards-btn:hover, 
+.shuffle-cards-btn:focus{
+    box-shadow: 1px 1px 3px 10px #55625e;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 32.5rem){
+    .memory-game {
+       gap: 1rem;
+    }
+    .memory-card {
+        min-height: 6rem;
+        min-width: 6rem;       
+    }
 }

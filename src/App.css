@@ -73,3 +73,19 @@ body {
 .memory-card.flip {
     transform: rotateY(180deg);
 }
+
+.modal-dialog {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-height: 100vh;
+	background-color: azure;
+	width: 100%;
+}
+
+.modal-closed {
+    display: none;
+}

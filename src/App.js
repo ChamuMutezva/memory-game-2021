@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as Realm from 'realm-web'
-
+import ModalEnd from './ModalEnd';
 
 import './App.css';
 //import CardButton from './CardButton';
@@ -15,6 +15,7 @@ function App() {
   const [flippedCards, setFlippedCards] = useState([])
   const [tempCards, setTempCards] = useState([])
   const [count, setCounter] = useState(0)
+  const [isOpen, setIsOpen] = useState(false)
   const fetchData = async () => {
     setFetchStatus("loading")
     const REALM_APP_ID = "memory-game-qxhym"
@@ -98,9 +99,23 @@ function App() {
   function endGame() {
     if (count === nums.length /2) {
       console.log("The game has ended")
+      setIsOpen(!isOpen)
+      resetGame()
     }
   }
 
+  function modalEndControl() {
+    setIsOpen(!isOpen)
+  }
+
+  function resetGame() {
+    const btns = document.querySelectorAll(".memory-card")
+    setCounter(0)
+    setRerender(false)
+    setMoves(0)
+    btns.forEach(btn => btn.classList.remove("flip"))
+    setNums(nums.sort(() => Math.random() - 0.5))
+  }
   
   if (fetchStatus === "idle" || fetchStatus === "loading") {
     return <div><h2>Loading...</h2></div>
@@ -133,7 +148,7 @@ function App() {
         </div>
         <button onClick={handleShuffle}>Shuffle Cards</button>
       </main>
-
+      <ModalEnd openModal={isOpen} click={modalEndControl}/>
     </div>
   );
 }

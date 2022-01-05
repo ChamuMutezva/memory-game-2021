@@ -8,7 +8,7 @@ function ModalEnd(props) {
                 <h3>Here are the results</h3>
                 <div className="moves">
                     <span className='moves-label'>Moves</span>
-                    <span className="moves-results"></span>
+                    <span className="moves-results">{props.moves}</span>
                 </div>
                 <div className="time-taken">
                     <span className='time-label'>Time</span>

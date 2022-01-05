@@ -133,3 +133,13 @@ body {
         min-width: 6rem;       
     }
 }
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-title {
+    text-align: center;
+}

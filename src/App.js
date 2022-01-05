@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as Realm from 'realm-web'
+import ClipLoader from "react-spinners/ClipLoader";
 import ModalEnd from './ModalEnd';
 
 import './App.css';
@@ -71,8 +72,8 @@ function App() {
 
   function flipCard(e) {
     const parent = e.target.closest("button")
-    
-    if (parent.classList.contains("flip")) {     
+
+    if (parent.classList.contains("flip")) {
       return
     } else {
       parent.classList.add("flip")
@@ -85,7 +86,7 @@ function App() {
     let [first, second] = flippedCards
     let [openCard1, openCard2] = tempCards
     if (first !== second) {
-      
+
       setTimeout(() => {
         openCard1.classList.remove("flip")
         openCard2.classList.remove("flip")
@@ -97,15 +98,15 @@ function App() {
   }
 
   function endGame() {
-    if (count === nums.length /2) {
+    if (count === nums.length / 2) {
       console.log("The game has ended")
       setIsOpen(!isOpen)
-      resetGame()
     }
   }
 
   function modalEndControl() {
     setIsOpen(!isOpen)
+    resetGame()
   }
 
   function resetGame() {
@@ -116,13 +117,18 @@ function App() {
     btns.forEach(btn => btn.classList.remove("flip"))
     setNums(nums.sort(() => Math.random() - 0.5))
   }
-  
+
   if (fetchStatus === "idle" || fetchStatus === "loading") {
-    return <div><h2>Loading...</h2></div>
+    return <div className='loading'>
+      <h2 className='loading-title'>Loading...</h2>
+      <ClipLoader />
+    </div>
   }
 
   if (fetchStatus === error) {
-    return <div><h1>Something went wrong!!</h1></div>
+    return <div className='loading-error'>
+      <h2 className='loading-error-title'>Something went wrong!!</h2>
+    </div>
   }
 
 
@@ -148,7 +154,7 @@ function App() {
         </div>
         <button className='shuffle-cards-btn' onClick={handleShuffle}>Shuffle Cards</button>
       </main>
-      <ModalEnd openModal={isOpen} click={modalEndControl}/>
+      <ModalEnd openModal={isOpen} click={modalEndControl} moves={moves} />
     </div>
   );
 }

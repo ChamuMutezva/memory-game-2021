@@ -1,0 +1,11 @@
+@use './base';
+@use './components';
+
+body {
+    background-color: rgb(151, 183, 243);
+    font-family: 'Passion One', cursive;
+}
+
+.App {
+    min-height: 100vh;
+}

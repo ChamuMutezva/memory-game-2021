@@ -3,12 +3,14 @@ import * as Realm from 'realm-web'
 import ClipLoader from "react-spinners/ClipLoader";
 import ModalEnd from './ModalEnd';
 
-import './App.css';
+import './sass/App.scss'
+
+//import './App.css';
 //import CardButton from './CardButton';
 //import ModalStart from './ModalStart';
 
 function App() {
-  const [rerender, setRerender] = useState(false);
+  //const [rerender, setRerender] = useState(false);
   const [moves, setMoves] = useState(0);
   const [nums, setNums] = useState([]);
   const [error, setError] = useState(null);
@@ -17,6 +19,14 @@ function App() {
   const [tempCards, setTempCards] = useState([])
   const [count, setCounter] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
+  const [inProgress, setInProgress] = useState(false)
+  const [timerCount, setTimerCount] = useState(0)
+  const [timerOn, setTimerOn] = useState(false)
+  //const [timeoutGame, setTimeoutGame] = useState(false)
+  const [minutes, setMinutes] = useState(0)
+  const [seconds, setSeconds] = useState(0)
+  const [intervalId, setIntervalId] = useState(0);
+
   const fetchData = async () => {
     setFetchStatus("loading")
     const REALM_APP_ID = "memory-game-qxhym"
@@ -25,24 +35,21 @@ function App() {
     try {
       const user = await app.logIn(credentials);
       const allNumbers = await user.functions.getAllNumbers()
-      setNums(allNumbers.sort(() => Math.random() - 0.5))
-      setRerender(!rerender)
+      //setNums(allNumbers.sort(() => Math.random() - 0.5))
+      setNums(shuffle(allNumbers))
+      // setRerender(!rerender)
       setFetchStatus("success")
-      console.log(nums)
+      //  console.log(nums)
     } catch (err) {
       setError(err)
       setFetchStatus("error")
       console.error(err);
     }
   }
+
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    handleShuffle()
-    // eslint-disable-next-line react-hooks/exhaustive-deps  
   }, [])
 
   useEffect(() => {
@@ -51,27 +58,93 @@ function App() {
   }, [count])
 
   useEffect(() => {
-    console.log(flippedCards)
-    console.log(tempCards)
     if (flippedCards.length === 2) {
       matchCards()
-      setMoves(moves + 1)
-      console.log(`the number of moves is currently at ${moves}`)
+      setMoves(moves + 1) // count each and every move
       setFlippedCards([])
       setTempCards([])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flippedCards, moves])
 
+  useEffect(() => {
+    setSeconds(timerCount % 60)
+    setMinutes(Math.floor(timerCount / 60))
+  }, [timerCount])
 
-  function handleShuffle() {
-    setRerender(!rerender)
-    setNums(nums.sort(() => Math.random() - 0.5))
-    console.log(nums)
+  /*
+  useEffect(() => {
+    if (timerOn) {
+      startTimer()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timerOn])
+*/
+
+  /* ---------------------------------------------------------------------------------------
+--              Shuffle Function                                                        --
+--    Shuffle function from http://stackoverflow.com/a/2450976                          --
+--    Credit and inspiration drawn from                                                 --
+--    https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle                        --
+----------------------------------------------------------------------------------------*/
+
+  function shuffle(array) {
+    let currentIndex = array.length,
+      temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  };
+
+  /*------------------------------------------------------------------*/
+
+  /* --------------------------------------------------------------------
+    --  STARTTIMER  FUNCTION - START THE TIMER WHEN GAME IS NOT IN   --
+    --  PROGRESS OTHERWISE DO NOTHING. FUNCTION FOR SINGLE PLAYER    --
+    --                                                               --
+    -----------------------------------------------------------------*/
+
+  function handlePlay() {   
+   // setTimerOn(!timerOn)
+    setNums(shuffle(nums))
+    setInProgress(!inProgress)
+    startTimer()
+
+  }
+
+  function startTimer() {
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(0);
+      return;
+    }
+
+    const newIntervalId = setInterval(() => {
+      setTimerCount(prevCount => prevCount + 1);
+
+    }, 1000);
+    setIntervalId(newIntervalId);
+
   }
 
   function flipCard(e) {
     const parent = e.target.closest("button")
+    if (!inProgress) {
+      setInProgress(true)
+      startTimer()
+    }
 
     if (parent.classList.contains("flip")) {
       return
@@ -99,26 +172,28 @@ function App() {
 
   function endGame() {
     if (count === nums.length / 2) {
-      console.log("The game has ended")
       setIsOpen(!isOpen)
     }
   }
 
   function modalEndControl() {
     setIsOpen(!isOpen)
+    setTimerOn(!timerOn)
     resetGame()
   }
 
   function resetGame() {
     const btns = document.querySelectorAll(".memory-card")
-    setCounter(0)
-    setRerender(false)
+    setCounter(0)    
     setMoves(0)
-    btns.forEach(btn => btn.classList.remove("flip"))
-    setNums(nums.sort(() => Math.random() - 0.5))
+   // setInProgress(!inProgress)
+    setTimerCount(0)
+    btns.forEach(btn => btn.classList.remove('flip'))   
+    setNums(shuffle(nums))
+   
   }
 
-  if (fetchStatus === "idle" || fetchStatus === "loading") {
+  if (fetchStatus === 'idle' || fetchStatus === 'loading') {
     return <div className='loading'>
       <h2 className='loading-title'>Loading...</h2>
       <ClipLoader />
@@ -132,27 +207,33 @@ function App() {
   }
 
 
+
+
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className='App'>
+      <header className='App-header'>
         <h1 className='heading-title'>{`memory game ${moves}`}</h1>
+        <div className="display-center">
+          <p>
+            <span>{minutes < 10 ? `0${minutes}` : minutes}:</span>           
+            <span>{seconds < 10 ? `0${seconds}` : seconds}</span>
+          </p>
+        </div>
 
       </header>
 
       <main className='main'>
         <div className='memory-game'>
-          {/*
-          {nums && nums.map(num => <CardButton key={num.id} num={num.num} />)}
-          */}
           {nums && nums.map(num => {
             return <button key={num._id} className='memory-card' onClick={flipCard} data-cardnum={num.num}>
               <span className="front-face">{num.num} </span>
               <span className="back-face"></span>
             </button>
           })}
-
         </div>
-        <button className='shuffle-cards-btn' onClick={handleShuffle}>Shuffle Cards</button>
+
+        <button className='play-game-btn' onClick={handlePlay}>{inProgress ? "Pause Game" : "Play Game"}</button>
+
       </main>
       <ModalEnd openModal={isOpen} click={modalEndControl} moves={moves} />
     </div>

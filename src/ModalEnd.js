@@ -2,7 +2,7 @@ import React from 'react'
 
 function ModalEnd(props) {
     return (
-        <footer className={`modal-dialog  ${props.openModal ? "modal-closed" : ""}`} >
+        <footer className={`modal-closed ${props.openModal ? "" : "modal-dialog"}`} >
             <div className="results-panel">
                 <h2>Congratulations, you win</h2>
                 <h3>Here are the results</h3>

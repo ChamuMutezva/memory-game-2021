@@ -160,6 +160,16 @@
 
 .display-center {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    max-width: 32.25rem;
+    padding-inline: 1rem;
+    margin: auto;
+}
+
+.main-time-stats,
+.main-moves-stats {
+    font-size: 1.5rem;
+    display: flex;
+    gap: 1rem;
 }

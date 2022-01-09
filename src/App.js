@@ -221,11 +221,15 @@ function App() {
   return (
     <div className='App'>
       <header className='App-header'>
-        <h1 className='heading-title'>{`memory game ${moves}`}</h1>
+        <h1 className='heading-title'>Memory game</h1>
         <div className="display-center">
-          <p>
-            <span>{minutes < 10 ? `0${minutes}` : minutes}:</span>
-            <span>{seconds < 10 ? `0${seconds}` : seconds}</span>
+          <p className='main-moves-stats'>
+            <span>Moves</span>
+            <span>{moves}</span>         
+          </p>
+          <p className='main-time-stats'>
+            <span>Time</span>
+            <span>{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</span>            
           </p>
         </div>
 

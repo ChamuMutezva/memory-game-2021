@@ -21,11 +21,13 @@ function App() {
   const [isOpen, setIsOpen] = useState(false)
   const [inProgress, setInProgress] = useState(false)
   const [timerCount, setTimerCount] = useState(0)
-  const [timerOn, setTimerOn] = useState(false)
+  // const [timerOn, setTimerOn] = useState(false)
   //const [timeoutGame, setTimeoutGame] = useState(false)
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [intervalId, setIntervalId] = useState(0);
+
+ // clearInterval(intervalId)
 
   const fetchData = async () => {
     setFetchStatus("loading")
@@ -46,6 +48,8 @@ function App() {
       console.error(err);
     }
   }
+
+  //clearInterval(intervalId);
 
   useEffect(() => {
     fetchData();
@@ -71,15 +75,6 @@ function App() {
     setSeconds(timerCount % 60)
     setMinutes(Math.floor(timerCount / 60))
   }, [timerCount])
-
-  /*
-  useEffect(() => {
-    if (timerOn) {
-      startTimer()
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timerOn])
-*/
 
   /* ---------------------------------------------------------------------------------------
 --              Shuffle Function                                                        --
@@ -116,11 +111,19 @@ function App() {
     --                                                               --
     -----------------------------------------------------------------*/
 
-  function handlePlay() {   
-   // setTimerOn(!timerOn)
-    setNums(shuffle(nums))
-    setInProgress(!inProgress)
-    startTimer()
+  function handlePlay() {
+    console.log(inProgress)
+
+    if (inProgress === true) {
+      return;
+    } else {
+      // setNums(shuffle(nums))
+      startTimer() // 1
+     // setInProgress(!inProgress)
+    }
+
+
+
 
   }
 
@@ -132,19 +135,18 @@ function App() {
     }
 
     const newIntervalId = setInterval(() => {
-      setTimerCount(prevCount => prevCount + 1);
-
+      setTimerCount(prevCount => prevCount + 1);    
     }, 1000);
     setIntervalId(newIntervalId);
-
+   
   }
-
+ 
   function flipCard(e) {
     const parent = e.target.closest("button")
-    if (!inProgress) {
-      setInProgress(true)
-      startTimer()
-    }
+    // if (!inProgress) {
+    //   setInProgress(true)
+    // startTimer()
+    // }
 
     if (parent.classList.contains("flip")) {
       return
@@ -165,6 +167,8 @@ function App() {
         openCard2.classList.remove("flip")
       }, 500)
     } else {
+     // openCard1.classList.add("paired")
+     //   openCard2.classList.add("paired")
       setCounter(count + 1)
     }
 
@@ -172,25 +176,30 @@ function App() {
 
   function endGame() {
     if (count === nums.length / 2) {
-      setIsOpen(!isOpen)
+      setIsOpen(!isOpen);
+      setInProgress(false)
+      clearInterval(intervalId)
+     //setIntervalId(false);
+      //startTimer() 
+      
     }
   }
 
   function modalEndControl() {
-    setIsOpen(!isOpen)
-    setTimerOn(!timerOn)
+    setIsOpen(!isOpen)   
     resetGame()
+    startTimer() 
   }
 
   function resetGame() {
     const btns = document.querySelectorAll(".memory-card")
-    setCounter(0)    
+    setCounter(0)
     setMoves(0)
-   // setInProgress(!inProgress)
+   // setInProgress(false)
     setTimerCount(0)
-    btns.forEach(btn => btn.classList.remove('flip'))   
+    btns.forEach(btn => btn.classList.remove('flip'))
     setNums(shuffle(nums))
-   
+
   }
 
   if (fetchStatus === 'idle' || fetchStatus === 'loading') {
@@ -215,7 +224,7 @@ function App() {
         <h1 className='heading-title'>{`memory game ${moves}`}</h1>
         <div className="display-center">
           <p>
-            <span>{minutes < 10 ? `0${minutes}` : minutes}:</span>           
+            <span>{minutes < 10 ? `0${minutes}` : minutes}:</span>
             <span>{seconds < 10 ? `0${seconds}` : seconds}</span>
           </p>
         </div>
@@ -235,7 +244,7 @@ function App() {
         <button className='play-game-btn' onClick={handlePlay}>{inProgress ? "Pause Game" : "Play Game"}</button>
 
       </main>
-      <ModalEnd openModal={isOpen} click={modalEndControl} moves={moves} />
+      <ModalEnd openModal={isOpen} click={modalEndControl} moves={moves} time={`${minutes}:${seconds}`} />
     </div>
   );
 }

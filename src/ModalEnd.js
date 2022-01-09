@@ -11,8 +11,8 @@ function ModalEnd(props) {
                     <span className="moves-results">{props.moves}</span>
                 </div>
                 <div className="time-taken">
-                    <span className='time-label'>Time</span>
-                    <span className="time-value">0:00</span>
+                    <span className='time-label'>Time Taken</span>
+                    <span className="time-value">{props.time}</span>
                 </div>
                 <button onClick={props.click}>Close modal</button>
             </div>

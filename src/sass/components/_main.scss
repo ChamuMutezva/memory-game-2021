@@ -73,9 +73,10 @@
 
 .front-face {
     transform: rotateY(-180deg);
-   // background-image: url('./assets/mongo.png');
+    background-color: #ddc0d3;
+    // background-image: url('./assets/mongo.png');
     background-image: url('../../assets/mongo.png');
-    background-color: #fbb3e2;
+    background-blend-mode: multiply;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -83,6 +84,10 @@
 
 .memory-card.flip {
     transform: rotateY(180deg);
+}
+
+.memory-card.paired {
+    background-color: grey;
 }
 
 
@@ -96,10 +101,10 @@
     width: 100%;
 }
 
-.modal-dialog {   
+.modal-dialog {
     display: flex;
     justify-content: center;
-    align-items: center;    
+    align-items: center;
     transition: width 2s;
     transition-delay: 500ms;
 }
@@ -154,7 +159,7 @@
 }
 
 .display-center {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

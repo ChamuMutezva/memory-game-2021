@@ -27,7 +27,7 @@ function App() {
   const [seconds, setSeconds] = useState(0)
   const [intervalId, setIntervalId] = useState(0);
 
- // clearInterval(intervalId)
+  // clearInterval(intervalId)
 
   const fetchData = async () => {
     setFetchStatus("loading")
@@ -113,17 +113,11 @@ function App() {
 
   function handlePlay() {
     console.log(inProgress)
-
     if (inProgress === true) {
       return;
     } else {
-      // setNums(shuffle(nums))
-      startTimer() // 1
-     // setInProgress(!inProgress)
+      startTimer()
     }
-
-
-
 
   }
 
@@ -135,18 +129,14 @@ function App() {
     }
 
     const newIntervalId = setInterval(() => {
-      setTimerCount(prevCount => prevCount + 1);    
+      setTimerCount(prevCount => prevCount + 1);
     }, 1000);
     setIntervalId(newIntervalId);
-   
+
   }
- 
+
   function flipCard(e) {
     const parent = e.target.closest("button")
-    // if (!inProgress) {
-    //   setInProgress(true)
-    // startTimer()
-    // }
 
     if (parent.classList.contains("flip")) {
       return
@@ -167,8 +157,8 @@ function App() {
         openCard2.classList.remove("flip")
       }, 500)
     } else {
-     // openCard1.classList.add("paired")
-     //   openCard2.classList.add("paired")
+      // openCard1.classList.add("paired")
+      //   openCard2.classList.add("paired")
       setCounter(count + 1)
     }
 
@@ -179,23 +169,23 @@ function App() {
       setIsOpen(!isOpen);
       setInProgress(false)
       clearInterval(intervalId)
-     //setIntervalId(false);
+      //setIntervalId(false);
       //startTimer() 
-      
+
     }
   }
 
   function modalEndControl() {
-    setIsOpen(!isOpen)   
+    setIsOpen(!isOpen)
     resetGame()
-    startTimer() 
+    startTimer()
   }
 
   function resetGame() {
     const btns = document.querySelectorAll(".memory-card")
     setCounter(0)
     setMoves(0)
-   // setInProgress(false)
+    // setInProgress(false)
     setTimerCount(0)
     btns.forEach(btn => btn.classList.remove('flip'))
     setNums(shuffle(nums))
@@ -225,11 +215,11 @@ function App() {
         <div className="display-center">
           <p className='main-moves-stats'>
             <span>Moves</span>
-            <span>{moves}</span>         
+            <span>{moves}</span>
           </p>
           <p className='main-time-stats'>
             <span>Time</span>
-            <span>{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</span>            
+            <span>{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</span>
           </p>
         </div>
 

@@ -41,6 +41,14 @@ User should be able to:
 
 ### What i learned
 
+#### Setting up Mongodb Realm
+
+- Create a Mongodb account if you have done so - it is free	
+- Connect to Mongo atlas( Mongodb database as a service) to be able to use your databases.  It is a fully cloud managed automated database . It also has free tier that does not require a credit card to connect to. Follow the steps and setup your own cluster and load the sample databases.
+- VS code has an extension to connect to MongoDb, which gives you access to make crud operations 
+- Apparently the memory-game data is not created, I created a json file of the data that will make part of my database. The connection to the data can be done with the VS CODE  extension for mongodb. My option for this was to explore another feature of MongoDb known as Mongo Atlas. 
+
+
 ### Continued development
 
 ### Useful resources

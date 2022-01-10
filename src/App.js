@@ -5,20 +5,16 @@ import ModalEnd from './ModalEnd';
 
 import './sass/App.scss'
 
-//import './App.css';
-//import CardButton from './CardButton';
-//import ModalStart from './ModalStart';
-
 function App() {
   //const [rerender, setRerender] = useState(false);
-  const [moves, setMoves] = useState(0);
+  const [moves, setMoves] = useState(0); // all the moves taken during the game
   const [nums, setNums] = useState([]);
   const [error, setError] = useState(null);
   const [fetchStatus, setFetchStatus] = useState('idle')
-  const [flippedCards, setFlippedCards] = useState([])
-  const [tempCards, setTempCards] = useState([])
-  const [count, setCounter] = useState(0)
-  const [isOpen, setIsOpen] = useState(false)
+  const [flippedCards, setFlippedCards] = useState([]) // temp array of numbers using data-, max 2 elements
+  const [tempCards, setTempCards] = useState([]) // temp array of dom elements, max 2 elements
+  const [count, setCounter] = useState(0) // to determine when game ends (when count === length of array divided by 2)
+  const [isOpen, setIsOpen] = useState(false) // closing and opening the ModalEnd dialog
   const [inProgress, setInProgress] = useState(false)
   const [timerCount, setTimerCount] = useState(0)
   // const [timerOn, setTimerOn] = useState(false)
@@ -39,7 +35,6 @@ function App() {
       const allNumbers = await user.functions.getAllNumbers()
       //setNums(allNumbers.sort(() => Math.random() - 0.5))
       setNums(shuffle(allNumbers))
-      // setRerender(!rerender)
       setFetchStatus("success")
       //  console.log(nums)
     } catch (err) {
@@ -48,8 +43,6 @@ function App() {
       console.error(err);
     }
   }
-
-  //clearInterval(intervalId);
 
   useEffect(() => {
     fetchData();
@@ -77,11 +70,11 @@ function App() {
   }, [timerCount])
 
   /* ---------------------------------------------------------------------------------------
---              Shuffle Function                                                        --
---    Shuffle function from http://stackoverflow.com/a/2450976                          --
---    Credit and inspiration drawn from                                                 --
---    https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle                        --
-----------------------------------------------------------------------------------------*/
+ --              Shuffle Function                                                        --
+ --    Shuffle function from http://stackoverflow.com/a/2450976                          --
+ --    Credit and inspiration drawn from                                                 --
+ --    https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle                        --
+ ----------------------------------------------------------------------------------------*/
 
   function shuffle(array) {
     let currentIndex = array.length,
@@ -103,9 +96,7 @@ function App() {
     return array;
   };
 
-  /*------------------------------------------------------------------*/
-
-  /* --------------------------------------------------------------------
+  /* ------------------------------------------------------------------
     --  STARTTIMER  FUNCTION - START THE TIMER WHEN GAME IS NOT IN   --
     --  PROGRESS OTHERWISE DO NOTHING. FUNCTION FOR SINGLE PLAYER    --
     --                                                               --
@@ -137,7 +128,8 @@ function App() {
 
   function flipCard(e) {
     const parent = e.target.closest("button")
-
+    console.log(flippedCards.concat(parent.dataset.cardnum))
+    console.log(tempCards.concat(parent))
     if (parent.classList.contains("flip")) {
       return
     } else {
@@ -157,8 +149,6 @@ function App() {
         openCard2.classList.remove("flip")
       }, 500)
     } else {
-      // openCard1.classList.add("paired")
-      //   openCard2.classList.add("paired")
       setCounter(count + 1)
     }
 
@@ -169,8 +159,6 @@ function App() {
       setIsOpen(!isOpen);
       setInProgress(false)
       clearInterval(intervalId)
-      //setIntervalId(false);
-      //startTimer() 
 
     }
   }

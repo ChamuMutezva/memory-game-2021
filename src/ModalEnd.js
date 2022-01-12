@@ -7,14 +7,14 @@ function ModalEnd(props) {
                 <h2>Congratulations, you win</h2>
                 <h3>Here are the results</h3>
                 <div className="moves">
-                    <span className='moves-label'>Moves</span>
+                    <span className="moves-label">Moves</span>
                     <span className="moves-results">{props.moves}</span>
                 </div>
                 <div className="time-taken">
-                    <span className='time-label'>Time Taken</span>
+                    <span className="time-label">Time Taken</span>
                     <span className="time-value">{props.time}</span>
                 </div>
-                <button onClick={props.click}>Close modal</button>
+                <button onClick={props.click} className="close-modal-btn">Close modal</button>
             </div>
         </footer>
     )

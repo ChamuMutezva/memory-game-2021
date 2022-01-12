@@ -36,8 +36,8 @@
     transition: transform .5s;
     outline: none;
     border: none;
-
 }
+
 
 .memory-card:hover,
 .memory-card:focus {
@@ -110,7 +110,7 @@
 }
 
 
-.play-game-btn {
+.play-game-btn, .close-modal-btn {
     max-width: 10rem;
     display: inline-block;
     margin: auto;

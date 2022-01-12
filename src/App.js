@@ -17,7 +17,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false) // closing and opening the ModalEnd dialog
   const [inProgress, setInProgress] = useState(false)
   const [timerCount, setTimerCount] = useState(0)
-  // const [timerOn, setTimerOn] = useState(false)
+  const [gameStarted, setGameStarted] = useState(false)
   //const [timeoutGame, setTimeoutGame] = useState(false)
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
@@ -69,6 +69,21 @@ function App() {
     setMinutes(Math.floor(timerCount / 60))
   }, [timerCount])
 
+  /*
+  useEffect(() => {
+    const btns = document.querySelectorAll(".memory-card")
+    if (!inProgress) {
+      btns.forEach(btn => {
+        btn.classList.add("inactive")
+      })
+    } else {
+      btns.forEach(btn => {
+        btn.classList.remove("inactive")
+      })
+    }
+  }, [inProgress])
+*/
+
   /* ---------------------------------------------------------------------------------------
  --              Shuffle Function                                                        --
  --    Shuffle function from http://stackoverflow.com/a/2450976                          --
@@ -103,12 +118,12 @@ function App() {
     -----------------------------------------------------------------*/
 
   function handlePlay() {
-    console.log(inProgress)
-    if (inProgress === true) {
-      return;
-    } else {
-      startTimer()
-    }
+    setInProgress(!inProgress)
+    // if (inProgress === true) {
+    //   return;
+    // } else {
+    startTimer()
+    // }
 
   }
 
@@ -128,8 +143,9 @@ function App() {
 
   function flipCard(e) {
     const parent = e.target.closest("button")
-    console.log(flippedCards.concat(parent.dataset.cardnum))
-    console.log(tempCards.concat(parent))
+    //  console.log(flippedCards.concat(parent.dataset.cardnum))
+    //  console.log(tempCards.concat(parent))
+
     if (parent.classList.contains("flip")) {
       return
     } else {

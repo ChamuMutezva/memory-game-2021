@@ -17,7 +17,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false) // closing and opening the ModalEnd dialog
   const [inProgress, setInProgress] = useState(false)
   const [timerCount, setTimerCount] = useState(0)
-  const [gameStarted, setGameStarted] = useState(false)
+ // const [gameStarted, setGameStarted] = useState(false)
   //const [timeoutGame, setTimeoutGame] = useState(false)
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)

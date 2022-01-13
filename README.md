@@ -96,3 +96,6 @@ const fetchData = async () => {
 
 ### Useful resources
 
+- [Mongodb Jumpstart videos](https://www.youtube.com/watch?v=RGfFpQF0NpE&list=PL4RCxklHWZ9v2lcat4oEVGQhZg6r4IQGV)
+- [Mongodb University - interactive learning](https://university.mongodb.com/mercury/M001/2021_December_14/chapter/Chapter_1_What_is_MongoDB_/lesson/5f5c03c704e9ff039e32729b/lecture)
+

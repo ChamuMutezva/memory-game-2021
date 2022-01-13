@@ -69,20 +69,7 @@ function App() {
     setMinutes(Math.floor(timerCount / 60))
   }, [timerCount])
 
-  /*
-  useEffect(() => {
-    const btns = document.querySelectorAll(".memory-card")
-    if (!inProgress) {
-      btns.forEach(btn => {
-        btn.classList.add("inactive")
-      })
-    } else {
-      btns.forEach(btn => {
-        btn.classList.remove("inactive")
-      })
-    }
-  }, [inProgress])
-*/
+ 
 
   /* ---------------------------------------------------------------------------------------
  --              Shuffle Function                                                        --
@@ -118,13 +105,8 @@ function App() {
     -----------------------------------------------------------------*/
 
   function handlePlay() {
-    setInProgress(!inProgress)
-    // if (inProgress === true) {
-    //   return;
-    // } else {
-    startTimer()
-    // }
-
+    setInProgress(!inProgress)    
+    startTimer()  
   }
 
   function startTimer() {
@@ -142,9 +124,7 @@ function App() {
   }
 
   function flipCard(e) {
-    const parent = e.target.closest("button")
-    //  console.log(flippedCards.concat(parent.dataset.cardnum))
-    //  console.log(tempCards.concat(parent))
+    const parent = e.target.closest("button")  
 
     if (parent.classList.contains("flip")) {
       return
